@@ -13,8 +13,9 @@ public class PlayerInput : MonoBehaviour
     public float Ver { get; private set; }
     public bool Inter { get; private set; }
     public bool Fire { get; private set; }
+    public bool MouseLeftStay { get; private set; }
     public bool MouseLeftDown { get; private set; }
-    public bool MouseRightDown { get; private set; }
+    public bool MouseRightStay { get; private set; }
     
     public Vector3 MouseRightDownPos { get; private set; }
     public Vector3 MouseLeftDownPos { get; private set; }
@@ -41,8 +42,9 @@ public class PlayerInput : MonoBehaviour
         Ver = Input.GetAxis("Vertical");
         Inter = Input.GetKeyDown(interactionKey);
         Fire = Input.GetKey(fireKey);
-        MouseLeftDown = Input.GetMouseButton(0);
-        MouseRightDown = Input.GetMouseButton(1);
+        MouseLeftStay = Input.GetMouseButton(0);
+        MouseLeftDown = Input.GetMouseButtonDown(0);
+        MouseRightStay = Input.GetMouseButton(1);
         Mousex = Input.GetAxis("Mouse X");
         Mousey = Input.GetAxis("Mouse Y");
         Ray mouseRay = gameCamera.ScreenPointToRay(Input.mousePosition);
@@ -56,9 +58,9 @@ public class PlayerInput : MonoBehaviour
             if (MouseLeftDown)
             {
                 MouseLeftDownPos = v;
-                MouseRightDownPos = player.transform.position;
+                MouseRightDownPos = player.transform.position + (v-player.transform.position).normalized;
             }
-            if (MouseRightDown)
+            if (MouseRightStay)
             {
                 MouseRightDownPos = v;
             }

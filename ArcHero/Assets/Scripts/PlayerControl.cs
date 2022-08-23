@@ -68,7 +68,7 @@ public class PlayerControl : Attacker
         {
             animator.SetBool("Walk", false);
         }*/
-        if (inputSys.MouseLeftDown && !firing)
+        if (inputSys.MouseLeftStay && !firing)
         {
             StartCoroutine(Shot());
         }
