@@ -25,12 +25,32 @@ public class PlayerControl : Attacker
     protected override void Update()
     {
         base.Update();
-/*        if(Vector3.Distance(transform.position,inputSys.mousePos) >= 1f)
+        if (!firing)
         {
-            rigid.velocity = transform.rotation * new Vector3(0, 0, 1f * moveSpeed);
-        }*/
-        rigid.velocity = new Vector3(inputSys.hor * moveSpeed, 0, inputSys.ver * moveSpeed);
-        //transform.LookAt(inputSys.mousePos);
+            Vector3 dir = inputSys.mousePos - transform.position;
+            dir.y = 0;
+            Quaternion rot = Quaternion.LookRotation(dir.normalized);
+            transform.rotation = Quaternion.Lerp(transform.rotation,rot,0.2f);
+            //transform.LookAt(inputSys.mousePos);
+        }
+        else
+        {
+            rigid.velocity = Vector3.zero;
+        }
+        if (Vector3.Distance(transform.position, inputSys.mousePos) >= 1.5f && inputSys.mouseRightDown)
+        {
+            animator.SetBool("Walk", true);
+            if (!firing)
+            {
+                rigid.velocity = transform.rotation * new Vector3(0, 0, 1f * moveSpeed);
+            }
+        }
+        else
+        {
+            rigid.velocity = Vector3.zero;
+            animator.SetBool("Walk", false);
+        }
+        /*rigid.velocity = new Vector3(inputSys.hor * moveSpeed, 0, inputSys.ver * moveSpeed);
         if (!(inputSys.ver == 0f && inputSys.hor == 0f))
         {
             animator.SetBool("Walk", true);
@@ -39,7 +59,7 @@ public class PlayerControl : Attacker
         else
         {
             animator.SetBool("Walk", false);
-        }
+        }*/
         if (inputSys.fire && !firing)
         {
             StartCoroutine(shot());
@@ -49,13 +69,13 @@ public class PlayerControl : Attacker
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        hpSlider.value = GetHp/maxhp;
+        hpSlider.value = GetHp / maxhp;
     }
 
     public override void TakeHeal(float heal)
     {
         base.TakeHeal(heal);
-        hpSlider.value = GetHp/maxhp;
+        hpSlider.value = GetHp / maxhp;
     }
 
     protected void MulMoveSpeed(float val)

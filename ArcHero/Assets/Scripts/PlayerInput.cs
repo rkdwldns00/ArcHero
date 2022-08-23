@@ -35,13 +35,18 @@ public class PlayerInput : MonoBehaviour
         ver = Input.GetAxis("Vertical");
         inter = Input.GetKeyDown(interactionKey);
         fire = Input.GetKey(fireKey);
-        mouseLeftDown = Input.GetMouseButtonDown(0);
-        mouseRightDown = Input.GetMouseButtonDown(1);
+        mouseLeftDown = Input.GetMouseButton(0);
+        mouseRightDown = Input.GetMouseButton(1);
         mousex = Input.GetAxis("Mouse X");
         mousey = Input.GetAxis("Mouse Y");
-        /*Ray mouseRay = gameCamera.ScreenPointToRay(Input.mousePosition);
-        Vector3 v = mouseRay.GetPoint(100f);
-        v.y = 0f;
-        mousePos = v;*/
+        Ray mouseRay = gameCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(mouseRay, out hit)) {
+            Vector3 v = hit.point;
+            v.y = 0f;
+            Debug.DrawRay(mouseRay.origin, mouseRay.direction * 30f, Color.red, 0.1f);
+            Debug.DrawLine(v, v + new Vector3(0, 10f, 0));
+            mousePos = v;
+        }
     }
 }
