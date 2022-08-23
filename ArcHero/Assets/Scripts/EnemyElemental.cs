@@ -7,11 +7,13 @@ public class EnemyElemental : Attacker
     public Elemental unitType;
     Animator animator;
     GameObject player;
+    Rigidbody rigid;
     Vector3 spawnPoint;
     protected override void Start()
     {
         animator = GetComponentInChildren<Animator>();
         player = FindObjectOfType<PlayerControl>().gameObject;
+        rigid = GetComponentInParent<Rigidbody>();
         base.Start();
     }
     
@@ -53,6 +55,7 @@ public class EnemyElemental : Attacker
         {
             animator.SetBool("Walk", false);
         }
+        rigid.velocity = Vector3.zero;
     }
 
     protected IEnumerator Attack()
@@ -62,7 +65,7 @@ public class EnemyElemental : Attacker
             firing = true;
             animator.SetTrigger("Attack");
             yield return new WaitForSeconds(0.3f);
-            StartCoroutine(shot());
+            StartCoroutine(Shot());
         }
     }
 

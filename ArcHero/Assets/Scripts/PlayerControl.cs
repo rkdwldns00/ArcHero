@@ -27,7 +27,7 @@ public class PlayerControl : Attacker
         base.Update();
         if (!firing)
         {
-            Vector3 dir = inputSys.mousePos - transform.position;
+            Vector3 dir = inputSys.MouseRightDownPos - transform.position;
             dir.y = 0;
             Quaternion rot = Quaternion.LookRotation(dir.normalized);
             transform.rotation = Quaternion.Lerp(transform.rotation,rot,0.2f);
@@ -37,7 +37,8 @@ public class PlayerControl : Attacker
         {
             rigid.velocity = Vector3.zero;
         }
-        if (Vector3.Distance(transform.position, inputSys.mousePos) >= 1.5f && inputSys.mouseRightDown)
+
+        if (Vector3.Distance(transform.position, inputSys.MouseRightDownPos) >= 1.5f && !firing)
         {
             animator.SetBool("Walk", true);
             if (!firing)
@@ -49,6 +50,13 @@ public class PlayerControl : Attacker
         {
             rigid.velocity = Vector3.zero;
             animator.SetBool("Walk", false);
+            if (firing)
+            {
+                Vector3 dir = inputSys.MouseLeftDownPos - transform.position;
+                dir.y = 0;
+                Quaternion rot = Quaternion.LookRotation(dir.normalized);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rot, 0.2f);
+            }
         }
         /*rigid.velocity = new Vector3(inputSys.hor * moveSpeed, 0, inputSys.ver * moveSpeed);
         if (!(inputSys.ver == 0f && inputSys.hor == 0f))
@@ -60,9 +68,9 @@ public class PlayerControl : Attacker
         {
             animator.SetBool("Walk", false);
         }*/
-        if (inputSys.fire && !firing)
+        if (inputSys.MouseLeftDown && !firing)
         {
-            StartCoroutine(shot());
+            StartCoroutine(Shot());
         }
     }
 
@@ -84,7 +92,7 @@ public class PlayerControl : Attacker
         maxSpeed *= val;
     }
 
-    public void specUp(ability val)
+    public void SpecUp(ability val)
     {
         switch (val)
         {
@@ -104,12 +112,12 @@ public class PlayerControl : Attacker
         }
     }
 
-    protected override IEnumerator shot()
+    protected override IEnumerator Shot()
     {
         firing = true;
         animator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.4f);
-        StartCoroutine(base.shot());
+        StartCoroutine(base.Shot());
     }
 
     /*protected override IEnumerator Die()

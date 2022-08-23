@@ -22,7 +22,7 @@ public class Attacker : Hitable
         base.Update();
     }
 
-    protected virtual IEnumerator shot()
+    protected virtual IEnumerator Shot()
     {
         firing = true;
         firingMotion = true;

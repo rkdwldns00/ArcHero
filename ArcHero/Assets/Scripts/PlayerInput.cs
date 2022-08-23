@@ -7,38 +7,44 @@ public class PlayerInput : MonoBehaviour
     public KeyCode interactionKey;
     public KeyCode fireKey;
     public float dpi;
-    float mx;
-    float my;
-    public float hor { get; private set; }
-    public float ver { get; private set; }
-    public bool inter { get; private set; }
-    public bool fire { get; private set; }
-    public bool mouseLeftDown { get; private set; }
-    public bool mouseRightDown { get; private set; }
+    //float mx;
+    //float my;
+    public float Hor { get; private set; }
+    public float Ver { get; private set; }
+    public bool Inter { get; private set; }
+    public bool Fire { get; private set; }
+    public bool MouseLeftDown { get; private set; }
+    public bool MouseRightDown { get; private set; }
     
-    public Vector3 mousePos { get; private set; }
+    public Vector3 MouseRightDownPos { get; private set; }
+    public Vector3 MouseLeftDownPos { get; private set; }
+    public Vector3 MousePos { get; private set; }
 
-    public float mousex { get; private set; }
-    public float mousey { get; private set; }
+    public float Mousex { get; private set; }
+    public float Mousey { get; private set; }
 
     Camera gameCamera;
+    GameObject player;
 
     void Start()
     {
         gameCamera = FindObjectOfType<Camera>();
+        MouseRightDownPos = FindObjectOfType<PlayerControl>().transform.position;
+        player = FindObjectOfType<PlayerControl>().gameObject;
+        MousePos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        hor = Input.GetAxis("Horizontal");
-        ver = Input.GetAxis("Vertical");
-        inter = Input.GetKeyDown(interactionKey);
-        fire = Input.GetKey(fireKey);
-        mouseLeftDown = Input.GetMouseButton(0);
-        mouseRightDown = Input.GetMouseButton(1);
-        mousex = Input.GetAxis("Mouse X");
-        mousey = Input.GetAxis("Mouse Y");
+        Hor = Input.GetAxis("Horizontal");
+        Ver = Input.GetAxis("Vertical");
+        Inter = Input.GetKeyDown(interactionKey);
+        Fire = Input.GetKey(fireKey);
+        MouseLeftDown = Input.GetMouseButton(0);
+        MouseRightDown = Input.GetMouseButton(1);
+        Mousex = Input.GetAxis("Mouse X");
+        Mousey = Input.GetAxis("Mouse Y");
         Ray mouseRay = gameCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(mouseRay, out hit)) {
@@ -46,7 +52,16 @@ public class PlayerInput : MonoBehaviour
             v.y = 0f;
             Debug.DrawRay(mouseRay.origin, mouseRay.direction * 30f, Color.red, 0.1f);
             Debug.DrawLine(v, v + new Vector3(0, 10f, 0));
-            mousePos = v;
+            MousePos = v;
+            if (MouseLeftDown)
+            {
+                MouseLeftDownPos = v;
+                MouseRightDownPos = player.transform.position;
+            }
+            if (MouseRightDown)
+            {
+                MouseRightDownPos = v;
+            }
         }
     }
 }

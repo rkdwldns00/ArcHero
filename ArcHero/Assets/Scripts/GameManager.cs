@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
             {
                 AbilityText.gameObject.SetActive(false);
                 Time.timeScale = 1f;
-                FindObjectOfType<PlayerControl>().specUp(choosePool[key - 1]);
+                FindObjectOfType<PlayerControl>().SpecUp(choosePool[key - 1]);
                 FindObjectOfType<Light>().intensity = 1f;
             }
         }
@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour
 
     void LevelUp()
     {
+        Level++;
         chooseAbility();
     }
 
@@ -196,7 +197,6 @@ public class GameManager : MonoBehaviour
     {
         FindObjectOfType<Light>().intensity = 0.5f;
         Exp -= levelUpExpList[Level - 1];
-        Level++;
         LevelUi.text = "Level : " + Level.ToString();
         do
         {
@@ -207,7 +207,6 @@ public class GameManager : MonoBehaviour
         } while (choosePool[0] == choosePool[1] || choosePool[1] == choosePool[2] || choosePool[2] == choosePool[0]);
         AbilityText.gameObject.SetActive(true);
         AbilityText.text = "1:" + choosePool[0].ToString() + ", 2:" + choosePool[1].ToString() + ", 3:" + choosePool[2].ToString();
-        Debug.Log(choosePool[0].ToString() + ", " + choosePool[1].ToString() + ", " + choosePool[2].ToString());
         Time.timeScale = 0f;
         choosingAbility = true;
     }
