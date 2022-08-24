@@ -52,7 +52,7 @@ MonoBehaviour:
   haveExp: 50
   firePosition: {fileID: 3939364770013526175}
   bullets:
-  - {fileID: 5387143858809336107, guid: e779acdc9ac4a3047960605ef5117b03, type: 3}
+  - {fileID: 5387143858809336107, guid: 0b40b8d764146ec4e80a47a9cc804b9e, type: 3}
   reloadSpeed: 2
   bulletDamage: 40
   unitType: 1

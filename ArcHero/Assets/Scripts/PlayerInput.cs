@@ -42,14 +42,14 @@ public class PlayerInput : MonoBehaviour
         Ver = Input.GetAxis("Vertical");
         Inter = Input.GetKeyDown(interactionKey);
         Fire = Input.GetKey(fireKey);
-        MouseLeftStay = Input.GetMouseButton(0);
-        MouseLeftDown = Input.GetMouseButtonDown(0);
-        MouseRightStay = Input.GetMouseButton(1);
         Mousex = Input.GetAxis("Mouse X");
         Mousey = Input.GetAxis("Mouse Y");
         Ray mouseRay = gameCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(mouseRay, out hit)) {
+            MouseLeftStay = Input.GetMouseButton(0);
+            MouseLeftDown = Input.GetMouseButtonDown(0);
+            MouseRightStay = Input.GetMouseButton(1);
             Vector3 v = hit.point;
             v.y = 0f;
             Debug.DrawRay(mouseRay.origin, mouseRay.direction * 30f, Color.red, 0.1f);

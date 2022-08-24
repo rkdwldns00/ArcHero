@@ -64,7 +64,7 @@ public class EnemyElemental : Attacker
         {
             firing = true;
             animator.SetTrigger("Attack");
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.3f + Random.Range(0f, 0.1f));
             StartCoroutine(Shot());
         }
     }

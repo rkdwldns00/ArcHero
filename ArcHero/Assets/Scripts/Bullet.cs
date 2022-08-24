@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     public float damage;
     public bool piercing;
     public bool ignoreMap;
-
+    bool isdead = false;
     void Start()
     {
 
@@ -21,25 +21,28 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<Hitable>() != null && !(other.transform.CompareTag(transform.tag) || (other.transform.parent!=null && other.transform.parent.CompareTag(transform.tag))))
+        if (!isdead)
         {
-            if (other.transform.parent != null)
+            if (other.GetComponentInParent<Hitable>() != null && !(other.transform.CompareTag(transform.tag) || (other.transform.parent != null && other.transform.parent.CompareTag(transform.tag))))
             {
-                Hit(other.transform.parent.gameObject);
+                if (other.transform.parent != null)
+                {
+                    Hit(other.transform.parent.gameObject);
+                }
+                else
+                {
+                    Hit(other.transform.gameObject);
+                }
+                other.transform.GetComponentInParent<Hitable>().TakeDamage(damage);
+                if (transform.CompareTag("Player"))
+                {
+                    FindObjectOfType<EnemyHpSlider>().ShowEnemyHp(other.GetComponentInParent<Hitable>().gameObject);
+                }
             }
-            else
+            else if (!ignoreMap && (other.transform.CompareTag("Map") || (other.transform.parent != null && other.transform.parent.CompareTag("Map"))))
             {
-                Hit(other.transform.gameObject);
+                Die();
             }
-            other.transform.GetComponentInParent<Hitable>().TakeDamage(damage);
-            if (transform.CompareTag("Player"))
-            {
-                FindObjectOfType<EnemyHpSlider>().ShowEnemyHp(other.GetComponentInParent<Hitable>().gameObject);
-            }
-        }
-        else if(!ignoreMap&&(other.transform.CompareTag("Map") || (other.transform.parent!=null && other.transform.parent.CompareTag("Map"))))
-        {
-            Die();
         }
     }
 
@@ -54,6 +57,8 @@ public class Bullet : MonoBehaviour
 
     void Die()
     {
+        isdead = true;
+        
         Destroy(gameObject);
     }
 }
