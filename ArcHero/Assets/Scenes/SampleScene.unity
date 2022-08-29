@@ -464,11 +464,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6188453050272439261, guid: 355506f59e53bdc43991086e434f0d67, type: 3}
       propertyPath: bulletDamage
-      value: 50
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6188453050272439262, guid: 355506f59e53bdc43991086e434f0d67, type: 3}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188453050272439262, guid: 355506f59e53bdc43991086e434f0d67, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188453050272439262, guid: 355506f59e53bdc43991086e434f0d67, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188453050272439262, guid: 355506f59e53bdc43991086e434f0d67, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6188453050272439262, guid: 355506f59e53bdc43991086e434f0d67, type: 3}
       propertyPath: m_LocalPosition.x

@@ -104,7 +104,7 @@ public class PlayerControl : Attacker
                 MulReloadSpeed(0.5f);
                 break;
             case ability.damage:
-                AddDamage(15f);
+                AddDamage(20f);
                 break;
             case ability.moveSpeed:
                 MulMoveSpeed(1.2f);
@@ -120,9 +120,10 @@ public class PlayerControl : Attacker
         StartCoroutine(base.Shot());
     }
 
-    /*protected override IEnumerator Die()
+    protected override IEnumerator Die()
     {
+        SceneManager.LoadScene(0);
         yield return null;
         StartCoroutine(base.Die());
-    }*/
+    }
 }
